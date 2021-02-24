@@ -6,11 +6,11 @@ date: "2021-02-23"
 output: github_document
 ---
 
-
+Welcome to my lab 5 assignment
 
 # Load Packages -----------------------------------------------------------
 
-```{r}
+```{r message=FALSE}
 library(tidyverse)
 ```
 
@@ -62,9 +62,12 @@ iris2 <- mutate(
 
 
 ```{r}
-mutate(iris,
+
+iris2 <- mutate(iris,
        sepal_area = Sepal.Length * Sepal.Width,
        petal_area = Petal.Length * Petal.Width)
+
+select(iris2, sepal_area, petal_area, Species)
 ```
 
 
@@ -83,15 +86,17 @@ inter-quartile range (iqr)
 
 
 ```{r}
-summarise(iris, sample_size=n())
-
-summarize(iris, max_Sepal.Length=max(Sepal.Length))
-summarize(iris, min_Sepal.Length=min(Sepal.Length))
-summarize(iris, range_Sepal.Length=range(Sepal.Length))
-summarize(iris, median_Sepal.Length=median(Sepal.Length))
-summarize(iris, q1=quantile(Sepal.Length, probs=0.25))
-summarize(iris, q2=quantile(Sepal.Length, probs=0.75))
-summarize(iris, IQR_Sepal.Length=IQR(Sepal.Length))
+summarise(
+  iris,
+  sample_size = n(),
+  max= max(Sepal.Length),
+  min= min(Sepal.Length),
+  range= max-min,
+  median= median(Sepal.Length),
+  q1 = quantile(Sepal.Length, probs = 0.25),
+  q2 = quantile(Sepal.Length, probs = 0.75),
+  iqr= IQR(Sepal.Length)
+)
 ```
 
 
@@ -121,12 +126,32 @@ PetalWidth <- summarize(
   ci_upper_limit = mean_Petal.Width + 1.96 * sem,
   ci_lower_limit = mean_Petal.Width - 1.96 * sem
 )
+PetalWidth
 ```
 
 # Question 6 and 7--------------------------------------------------------------
 
 6 and 7. Visualize the relationship between petal width and species using a strip plot. Then add the mean and 95% confidence interval for each species.
 
+```{r}
+ggplot(data=iris)+
+  geom_jitter(mapping=aes(x=Species, y=Petal.Width))
+
+
+
+ggplot(data = iris) +
+  geom_jitter(mapping = aes(y = Petal.Width, x = Species)) +
+  geom_crossbar(
+    data = PetalWidth,
+    mapping = aes(
+      x = Species,
+      y = mean_Petal.Width,
+      ymax = ci_upper_limit,
+      ymin = ci_lower_limit
+    ),
+    color = "blue"
+  )
+```
 
 
 
@@ -135,9 +160,13 @@ PetalWidth <- summarize(
 8. Visualize the relationship between petal length, petal width, and species using a scatterplot. Map the two numerical variables to the x and y axes and map species to the color and shape aesthetics.
 
 ```{r}
-ggplot(data= iris) +
-  geom_point(mapping=aes(x=Petal.Length, y =Petal.Width, color=Species),
-  )
+ggplot(data = iris) +
+  geom_point(mapping = aes(
+    x = Petal.Length,
+    y = Petal.Width,
+    color = Species,
+    shape = Species
+  ))
 ```
 
 

@@ -3,22 +3,13 @@ Lab 5 Assignment
 Emily Miller
 2021-02-23
 
+Welcome to my lab 5 assignment
+
 # Load Packages ———————————————————–
 
 ``` r
 library(tidyverse)
 ```
-
-    ## -- Attaching packages --------------------------------------- tidyverse 1.3.0 --
-
-    ## v ggplot2 3.3.3     v purrr   0.3.4
-    ## v tibble  3.0.4     v dplyr   1.0.2
-    ## v tidyr   1.1.2     v stringr 1.4.0
-    ## v readr   1.4.0     v forcats 0.5.0
-
-    ## -- Conflicts ------------------------------------------ tidyverse_conflicts() --
-    ## x dplyr::filter() masks stats::filter()
-    ## x dplyr::lag()    masks stats::lag()
 
 # Data ——————————————————————–
 
@@ -86,25 +77,27 @@ iris2 <- mutate(
 <!-- end list -->
 
 ``` r
-mutate(iris,
+iris2 <- mutate(iris,
        sepal_area = Sepal.Length * Sepal.Width,
        petal_area = Petal.Length * Petal.Width)
+
+select(iris2, sepal_area, petal_area, Species)
 ```
 
-    ## # A tibble: 150 x 7
-    ##    Sepal.Length Sepal.Width Petal.Length Petal.Width Species sepal_area
-    ##           <dbl>       <dbl>        <dbl>       <dbl> <fct>        <dbl>
-    ##  1          5.1         3.5          1.4         0.2 setosa        17.8
-    ##  2          4.9         3            1.4         0.2 setosa        14.7
-    ##  3          4.7         3.2          1.3         0.2 setosa        15.0
-    ##  4          4.6         3.1          1.5         0.2 setosa        14.3
-    ##  5          5           3.6          1.4         0.2 setosa        18  
-    ##  6          5.4         3.9          1.7         0.4 setosa        21.1
-    ##  7          4.6         3.4          1.4         0.3 setosa        15.6
-    ##  8          5           3.4          1.5         0.2 setosa        17  
-    ##  9          4.4         2.9          1.4         0.2 setosa        12.8
-    ## 10          4.9         3.1          1.5         0.1 setosa        15.2
-    ## # ... with 140 more rows, and 1 more variable: petal_area <dbl>
+    ## # A tibble: 150 x 3
+    ##    sepal_area petal_area Species
+    ##         <dbl>      <dbl> <fct>  
+    ##  1       17.8      0.280 setosa 
+    ##  2       14.7      0.280 setosa 
+    ##  3       15.0      0.26  setosa 
+    ##  4       14.3      0.3   setosa 
+    ##  5       18        0.280 setosa 
+    ##  6       21.1      0.68  setosa 
+    ##  7       15.6      0.42  setosa 
+    ##  8       17        0.3   setosa 
+    ##  9       12.8      0.280 setosa 
+    ## 10       15.2      0.15  setosa 
+    ## # ... with 140 more rows
 
 # Question 4 ————————————————————–
 
@@ -123,77 +116,23 @@ mutate(iris,
 <!-- end list -->
 
 ``` r
-summarise(iris, sample_size=n())
+summarise(
+  iris,
+  sample_size = n(),
+  max= max(Sepal.Length),
+  min= min(Sepal.Length),
+  range= max-min,
+  median= median(Sepal.Length),
+  q1 = quantile(Sepal.Length, probs = 0.25),
+  q2 = quantile(Sepal.Length, probs = 0.75),
+  iqr= IQR(Sepal.Length)
+)
 ```
 
-    ## # A tibble: 1 x 1
-    ##   sample_size
-    ##         <int>
-    ## 1         150
-
-``` r
-summarize(iris, max_Sepal.Length=max(Sepal.Length))
-```
-
-    ## # A tibble: 1 x 1
-    ##   max_Sepal.Length
-    ##              <dbl>
-    ## 1              7.9
-
-``` r
-summarize(iris, min_Sepal.Length=min(Sepal.Length))
-```
-
-    ## # A tibble: 1 x 1
-    ##   min_Sepal.Length
-    ##              <dbl>
-    ## 1              4.3
-
-``` r
-summarize(iris, range_Sepal.Length=range(Sepal.Length))
-```
-
-    ## # A tibble: 2 x 1
-    ##   range_Sepal.Length
-    ##                <dbl>
-    ## 1                4.3
-    ## 2                7.9
-
-``` r
-summarize(iris, median_Sepal.Length=median(Sepal.Length))
-```
-
-    ## # A tibble: 1 x 1
-    ##   median_Sepal.Length
-    ##                 <dbl>
-    ## 1                 5.8
-
-``` r
-summarize(iris, q1=quantile(Sepal.Length, probs=0.25))
-```
-
-    ## # A tibble: 1 x 1
-    ##      q1
-    ##   <dbl>
-    ## 1   5.1
-
-``` r
-summarize(iris, q2=quantile(Sepal.Length, probs=0.75))
-```
-
-    ## # A tibble: 1 x 1
-    ##      q2
-    ##   <dbl>
-    ## 1   6.4
-
-``` r
-summarize(iris, IQR_Sepal.Length=IQR(Sepal.Length))
-```
-
-    ## # A tibble: 1 x 1
-    ##   IQR_Sepal.Length
-    ##              <dbl>
-    ## 1              1.3
+    ## # A tibble: 1 x 8
+    ##   sample_size   max   min range median    q1    q2   iqr
+    ##         <int> <dbl> <dbl> <dbl>  <dbl> <dbl> <dbl> <dbl>
+    ## 1         150   7.9   4.3   3.6    5.8   5.1   6.4   1.3
 
 # Question 5 ————————————————————–
 
@@ -228,11 +167,47 @@ PetalWidth <- summarize(
 
     ## `summarise()` ungrouping output (override with `.groups` argument)
 
+``` r
+PetalWidth
+```
+
+    ## # A tibble: 3 x 8
+    ##   Species sample_size mean_Petal.Width sd_Petal.Width var_Petal.Width    sem
+    ##   <fct>         <int>            <dbl>          <dbl>           <dbl>  <dbl>
+    ## 1 setosa           50            0.246          0.105          0.0111 0.0149
+    ## 2 versic~          50            1.33           0.198          0.0391 0.0280
+    ## 3 virgin~          50            2.03           0.275          0.0754 0.0388
+    ## # ... with 2 more variables: ci_upper_limit <dbl>, ci_lower_limit <dbl>
+
 # Question 6 and 7————————————————————–
 
 6 and 7. Visualize the relationship between petal width and species
 using a strip plot. Then add the mean and 95% confidence interval for
 each species.
+
+``` r
+ggplot(data=iris)+
+  geom_jitter(mapping=aes(x=Species, y=Petal.Width))
+```
+
+![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+
+``` r
+ggplot(data = iris) +
+  geom_jitter(mapping = aes(y = Petal.Width, x = Species)) +
+  geom_crossbar(
+    data = PetalWidth,
+    mapping = aes(
+      x = Species,
+      y = mean_Petal.Width,
+      ymax = ci_upper_limit,
+      ymin = ci_lower_limit
+    ),
+    color = "blue"
+  )
+```
+
+![](README_files/figure-gfm/unnamed-chunk-8-2.png)<!-- -->
 
 # Question 8 ————————————————————–
 
@@ -243,12 +218,16 @@ each species.
 <!-- end list -->
 
 ``` r
-ggplot(data= iris) +
-  geom_point(mapping=aes(x=Petal.Length, y =Petal.Width, color=Species),
-  )
+ggplot(data = iris) +
+  geom_point(mapping = aes(
+    x = Petal.Length,
+    y = Petal.Width,
+    color = Species,
+    shape = Species
+  ))
 ```
 
-![](README_files/figure-gfm/unnamed-chunk-8-1.png)<!-- -->
+![](README_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
 # Session Info ————————————————————
 
@@ -266,7 +245,7 @@ sessioninfo::session_info()
     ##  collate  English_United States.1252  
     ##  ctype    English_United States.1252  
     ##  tz       America/Chicago             
-    ##  date     2021-02-23                  
+    ##  date     2021-02-24                  
     ## 
     ## - Packages -------------------------------------------------------------------
     ##  package     * version date       lib source        
