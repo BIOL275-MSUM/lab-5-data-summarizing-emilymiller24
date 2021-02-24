@@ -111,7 +111,9 @@ select(iris2, sepal_area, petal_area, Species)
 3.  minimum value
 4.  range
 5.  median
-6.  first quartile (q1) third quartile (q2) inter-quartile range (iqr)
+6.  first quartile (q1)
+7.  third quartile (q2)
+8.  inter-quartile range (iqr)
 
 <!-- end list -->
 

@@ -81,8 +81,8 @@ select(iris2, sepal_area, petal_area, Species)
   d. range
   e. median
   f. first quartile (q1)
-third quartile (q2)
-inter-quartile range (iqr)
+  g. third quartile (q2)
+  h. inter-quartile range (iqr)
 
 
 ```{r}
