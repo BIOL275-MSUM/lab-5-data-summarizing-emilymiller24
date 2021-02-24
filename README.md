@@ -5,19 +5,19 @@ Emily Miller
 
 Welcome to my lab 5 assignment
 
-# Load Packages ———————————————————–
+# Load Packages
 
 ``` r
 library(tidyverse)
 ```
 
-# Data ——————————————————————–
+# Data
 
 ``` r
 iris <- as_tibble(iris)
 ```
 
-# Question 1 ————————————————————–
+# Question 1
 
 1.  Rename each variable so that it is all lower-case and uses an
     underscore \_ instead of a period . in the name (the recommended
@@ -51,7 +51,7 @@ rename(
     ## 10          4.9         3.1          1.5         0.1 setosa 
     ## # ... with 140 more rows
 
-# Question 2 ————————————————————–
+# Question 2
 
 2.  Convert the four numerical variables from cm to mm by multiplying by
     10. Print the resulting table.
@@ -68,7 +68,7 @@ iris2 <- mutate(
 )
 ```
 
-# Question 3 ————————————————————–
+# Question 3
 
 3.  Calculate sepal area and petal area (area is equal to length
     multiplied by width). Print a table with only the variables sepal
@@ -99,7 +99,7 @@ select(iris2, sepal_area, petal_area, Species)
     ## 10       15.2      0.15  setosa 
     ## # ... with 140 more rows
 
-# Question 4 ————————————————————–
+# Question 4
 
 4.  Calculate the following statistics for the entire dataset from the
     sepal length variable and print the resulting table:
@@ -136,7 +136,7 @@ summarise(
     ##         <int> <dbl> <dbl> <dbl>  <dbl> <dbl> <dbl> <dbl>
     ## 1         150   7.9   4.3   3.6    5.8   5.1   6.4   1.3
 
-# Question 5 ————————————————————–
+# Question 5
 
 5.  Calculate the following statistics for each species from the petal
     width variable and print the resulting table:
@@ -181,7 +181,7 @@ PetalWidth
     ## 3 virgin~          50            2.03           0.275          0.0754 0.0388
     ## # ... with 2 more variables: ci_upper_limit <dbl>, ci_lower_limit <dbl>
 
-# Question 6 and 7————————————————————–
+# Question 6 and 7
 
 6 and 7. Visualize the relationship between petal width and species
 using a strip plot. Then add the mean and 95% confidence interval for
@@ -211,7 +211,7 @@ ggplot(data = iris) +
 
 ![](README_files/figure-gfm/unnamed-chunk-8-2.png)<!-- -->
 
-# Question 8 ————————————————————–
+# Question 8
 
 8.  Visualize the relationship between petal length, petal width, and
     species using a scatterplot. Map the two numerical variables to the
@@ -231,7 +231,7 @@ ggplot(data = iris) +
 
 ![](README_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
-# Session Info ————————————————————
+# Session Info
 
 ``` r
 sessioninfo::session_info()
